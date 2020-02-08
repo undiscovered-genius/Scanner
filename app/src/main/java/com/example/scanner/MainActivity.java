@@ -3,9 +3,13 @@ package com.example.scanner;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -15,12 +19,32 @@ import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
+import static android.Manifest.permission.CAMERA;
+
 public class MainActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
     private ZXingScannerView zXingScannerView ;
+    private static final int REQUEST_CAMERA = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        zXingScannerView = new ZXingScannerView(this);
+        if(checkPermission())
+        {
+            Toast.makeText(MainActivity.this, "PERMISSION is granted!", Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            requestPermission();
+        }
+    }
+    private boolean checkPermission()
+    {
+        return (ContextCompat.checkSelfPermission(MainActivity.this, CAMERA) == PackageManager.PERMISSION_GRANTED);
+    }
+    private void requestPermission()
+    {
+        ActivityCompat.requestPermissions(this, new String[]{CAMERA}, REQUEST_CAMERA);
     }
     public void scan(View view){
         zXingScannerView  =new ZXingScannerView(getApplicationContext());
