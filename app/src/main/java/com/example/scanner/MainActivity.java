@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
@@ -24,10 +25,13 @@ import static android.Manifest.permission.CAMERA;
 public class MainActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
     private ZXingScannerView zXingScannerView ;
     private static final int REQUEST_CAMERA = 1;
+    private Button generate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        generate = findViewById(R.id.generate);
+
         zXingScannerView = new ZXingScannerView(this);
         if(checkPermission())
         {
@@ -37,6 +41,14 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         {
             requestPermission();
         }
+
+        generate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, GenerateActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     private boolean checkPermission()
     {

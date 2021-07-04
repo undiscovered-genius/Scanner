@@ -6,15 +6,26 @@
     android:layout_height="match_parent"
     android:background="#222222"
     android:gravity="center"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <Button
+        android:id="@+id/generate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#383838"
+        android:text="Generate  QR  Code"
+        android:layout_margin="10dp"
+        android:textColor="#fff"
+        android:layout_marginBottom="20dp"/>
+    <Button
+        android:id="@+id/scan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#383838"
         android:onClick="scan"
-        android:text="scan"
+        android:layout_margin="10dp"
+        android:text="Scan QR Code"
         android:textColor="#fff" />
 
 </LinearLayout>
